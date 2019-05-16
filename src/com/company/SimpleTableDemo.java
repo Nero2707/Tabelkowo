@@ -60,7 +60,16 @@ public class SimpleTableDemo extends JPanel {
                 wczytajXML();
             }
         } );
-
+        zapiszDaneTxtButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                zapiszTXT();
+            }
+        } );
+        zapiszDaneXmlButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                zapiszXML();
+            }
+        } );
 
     }
 
@@ -74,7 +83,13 @@ public class SimpleTableDemo extends JPanel {
     }
 
     private void wczytajXML() {
-        
+
+    }
+    private void zapiszTXT() {
+
+    }
+    private void zapiszXML() {
+
     }
 
 
