@@ -47,11 +47,21 @@ public class SimpleTableDemo extends JPanel {
     public SimpleTableDemo() {
         super(new GridLayout(1,0));
 
-        String[] columnNames = {"First Name",
-                "Last Name",
-                "Sport",
-                "# of Years",
-                "Vegetarian"};
+        String[] columnNames = {"Producent",
+                "Wielkość matrycy",
+                "Rozdzielczość",
+                "Powłoka matrycy",
+                "Ekran dotykowy",
+                "Seria procesora",
+                "Liczba rdzeni",
+                "Taktowanie bazowe",
+                "Wielkość pamięci RAM",
+                "Pojemność dysku",
+                "Typ dysku",
+                "Karta graficzna",
+                "Pamięć karty graficznej",
+                "System operacyjny",
+                "Napęd optyczny"};
 
         Object[][] data = {
                 {"Kathy", "Smith",
