@@ -63,13 +63,14 @@ public class SimpleTableDemo extends JPanel {
 
     private void wczytajTXT() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        try (Stream<String> stream = Files.lines(Paths.get("laptopy.txt"))) {
-            stream.forEach(System.out::println);
-            model.addRow(new Object[]{"abc","abc","abc"});
+        try (Stream<String> wiersze = Files.lines(Paths.get("laptopy.txt"))) {
+            wiersze.forEach(wiersz->model.addRow(wiersz.split(";",-1)));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
 
 
