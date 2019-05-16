@@ -113,7 +113,7 @@ public class SimpleTableDemo extends JPanel {
             }
 
             private void wczytajTXT() {
-                System.out.print("JESTEM PRZYCISKIĘ")
+                System.out.print("JESTEM PRZYCISKIĘ");
             }
         } );
 
