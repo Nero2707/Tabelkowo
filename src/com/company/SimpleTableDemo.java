@@ -38,8 +38,6 @@ package com.company;
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -66,6 +64,16 @@ public class SimpleTableDemo extends JPanel {
                 "Napęd optyczny"};
 
         Object[][] data = {
+                {"Kathy", "Smith",
+                        "Snowboarding", new Integer(5), new Boolean(false)},
+                {"John", "Doe",
+                        "Rowing", new Integer(3), new Boolean(true)},
+                {"Sue", "Black",
+                        "Knitting", new Integer(2), new Boolean(false)},
+                {"Jane", "White",
+                        "Speed reading", new Integer(20), new Boolean(true)},
+                {"Joe", "Brown",
+                        "Pool", new Integer(10), new Boolean(false)}
         };
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -97,22 +105,9 @@ public class SimpleTableDemo extends JPanel {
 
         //Add the scroll pane to this panel.
         add(scrollPane);
-        wczytajDaneTxtButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                wczytajDane();
-            }
-        } );
-        void wczytajDane(){
-            System.out.print("JESTEM PRZYCISKIĘ");
-//        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                // process the line.
-//            }
-        }
-    }
-    }
 
+
+    }
 
     private void printDebugData(JTable table) {
         int numRows = table.getRowCount();
