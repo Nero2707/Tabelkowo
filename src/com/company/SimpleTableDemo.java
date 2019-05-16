@@ -5,10 +5,14 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class SimpleTableDemo extends JPanel {
     private boolean DEBUG = false;
@@ -85,7 +89,20 @@ public class SimpleTableDemo extends JPanel {
     private void wczytajXML() {
 
     }
-    private void zapiszTXT() {
+    private void zapiszTXT() throws FileNotFoundException {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        PrintWriter plik = new PrintWriter("laptopy.txt");
+        plik.write("");
+        for (int wiersz = 0; wiersz < table.getRowCount(); wiersz++) {
+            for (int kolumna = 0; kolumna < table.getColumnCount(); kolumna++) {
+                String doPliku="";
+                doPliku=+ table.getValueAt(wiersz, kolumna).toString()+";";
+
+            }
+        }
+
+        plik.append();
+        plik.close();
 
     }
     private void zapiszXML() {
