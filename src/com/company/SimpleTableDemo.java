@@ -54,8 +54,11 @@ public class SimpleTableDemo extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 wczytajTXT();
             }
-
-
+        } );
+        wczytajDaneXmlButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                wczytajXML();
+            }
         } );
 
 
@@ -65,16 +68,19 @@ public class SimpleTableDemo extends JPanel {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         try (Stream<String> wiersze = Files.lines(Paths.get("laptopy.txt"))) {
             wiersze.forEach(wiersz->model.addRow(wiersz.split(";",-1)));
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void wczytajXML() {
+        
+    }
 
 
 
-    private static void createAndShowGUI() {
+
+        private static void createAndShowGUI() {
 
         JFrame frame = new JFrame("Tabelkowo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
