@@ -1,8 +1,22 @@
 package com.company.com.company.model;
 
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "laptop")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Screen {
+
+    @XmlElement(name = "size")
     public String size;
+
+    @XmlElement(name = "type")
     public String type;
+
+    @XmlElement(name = "touchscreen")
     public String touchscreen;
 
     public String getSize() {

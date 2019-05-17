@@ -1,14 +1,23 @@
 package com.company;
 
+import com.company.com.company.model.*;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 
@@ -108,7 +117,77 @@ public class SimpleTableDemo extends JPanel {
 
     }
     private void zapiszXML() {
-       // JAXBContext jaxbContext = JAXBContext.newInstance(Employee.class);
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        List<Laptop> laptopList = new ArrayList<>();
+        Laptops laptops = new Laptops();
+        for (int row = 0; row < table.getRowCount(); row++) {
+            Screen screen = new Screen();
+            Laptop laptop = new Laptop();
+            Processor procesor = new Processor();
+            Disc dysk = new Disc();
+            GraphicCard grafika = new GraphicCard();
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                String nazwaKolumny = table.getColumnName(col);
+                if("producent".equalsIgnoreCase(nazwaKolumny)){
+                    laptop.setManufacturer((String)table.getValueAt(row, col));
+                }
+                if("rozdzielczość".equalsIgnoreCase(nazwaKolumny)){
+                    screen.setSize((String)table.getValueAt(row, col));
+                }
+                if("powłoka matrycy".equalsIgnoreCase(nazwaKolumny)){
+                    screen.setType((String)table.getValueAt(row, col));
+                }
+                if("ekran dotykowy".equalsIgnoreCase(nazwaKolumny)){
+                    screen.setTouchscreen((String)table.getValueAt(row, col));
+                }
+                if("seria procesora".equalsIgnoreCase(nazwaKolumny)){
+                    procesor.setName((String)table.getValueAt(row, col));
+                }
+                if("liczba rdzeni".equalsIgnoreCase(nazwaKolumny)){
+                    procesor.setPhysical_cores((String)table.getValueAt(row, col));
+                }
+                if("Taktowanie bazowe".equalsIgnoreCase(nazwaKolumny)){
+                    procesor.setClock_speed((String)table.getValueAt(row, col));
+                }
+                if("wielkość pamięci ram".equalsIgnoreCase(nazwaKolumny)){
+                    laptop.setRam((String)table.getValueAt(row, col));
+                }
+                if("pojemność dysku".equalsIgnoreCase(nazwaKolumny)){
+                    dysk.setStorage((String)table.getValueAt(row, col));
+                }
+                if("typ dysku".equalsIgnoreCase(nazwaKolumny)){
+                    dysk.setType((String)table.getValueAt(row, col));
+                }
+                if("karta graficzna".equalsIgnoreCase(nazwaKolumny)){
+                    grafika.setName((String)table.getValueAt(row, col));
+                }
+                if("pamięć karty graficznej".equalsIgnoreCase(nazwaKolumny)){
+                    grafika.setMemory((String)table.getValueAt(row, col));
+                }
+                if("system operacyjny".equalsIgnoreCase(nazwaKolumny)){
+                    laptop.setOs((String)table.getValueAt(row, col));
+                }
+                if("napęd optyczny".equalsIgnoreCase(nazwaKolumny)){
+                    laptop.setDisc_reader((String)table.getValueAt(row, col));
+                }
+                laptop.setScreen(screen);
+                laptop.setProcessor(procesor);
+                laptop.setDisc(dysk);
+                laptop.setGraphic_card(grafika);
+
+            }
+            laptopList.add(laptop);
+        }
+        laptops.setLaptops(laptopList);
+        JAXBContext jaxbContext = null;
+        try {
+            jaxbContext = JAXBContext.newInstance(Laptops.class);
+            Marshaller jaxbMarshaller  = jaxbContext.createMarshaller();
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            jaxbMarshaller.marshal(laptops, new File("laptopy.xml"));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
 
     }
 

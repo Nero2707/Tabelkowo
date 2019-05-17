@@ -1,14 +1,38 @@
 package com.company.com.company.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "laptop")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Laptop {
+
+    @XmlElement(name = "manufacturer")
     public String manufacturer;
+
+    @XmlElement(name = "screen")
     public Screen screen;
+
+    @XmlElement(name = "processor")
     public Processor processor;
+
+    @XmlElement(name = "disc")
     public Disc disc;
+
+    @XmlElement(name = "ram")
     public String ram;
+
+    @XmlElement(name = "graphic_card")
     public GraphicCard graphic_card;
+
+    @XmlElement(name = "os")
     public String os;
+
+    @XmlElement(name = "disc_reader")
     public String disc_reader;
+
 
     public String getManufacturer() {
         return manufacturer;

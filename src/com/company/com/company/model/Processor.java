@@ -1,8 +1,21 @@
 package com.company.com.company.model;
 
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "laptop")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Processor {
+    @XmlElement(name = "name")
     public String name;
+
+    @XmlElement(name = "physical_cores")
     public String physical_cores;
+
+    @XmlElement(name = "clock_speed")
     public String clock_speed;
 
     public String getName() {
