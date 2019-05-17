@@ -5,14 +5,12 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
 
 public class SimpleTableDemo extends JPanel {
     private boolean DEBUG = false;
@@ -66,7 +64,7 @@ public class SimpleTableDemo extends JPanel {
         } );
         zapiszDaneTxtButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                zapiszTXT();
+                    zapiszTXT();
             }
         } );
         zapiszDaneXmlButton.addActionListener(new ActionListener() {
@@ -79,6 +77,7 @@ public class SimpleTableDemo extends JPanel {
 
     private void wczytajTXT() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
         try (Stream<String> wiersze = Files.lines(Paths.get("laptopy.txt"))) {
             wiersze.forEach(wiersz->model.addRow(wiersz.split(";",-1)));
         } catch (IOException e) {
@@ -89,23 +88,27 @@ public class SimpleTableDemo extends JPanel {
     private void wczytajXML() {
 
     }
-    private void zapiszTXT() throws FileNotFoundException {
+    private void zapiszTXT() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        PrintWriter plik = new PrintWriter("laptopy.txt");
-        plik.write("");
-        for (int wiersz = 0; wiersz < table.getRowCount(); wiersz++) {
-            for (int kolumna = 0; kolumna < table.getColumnCount(); kolumna++) {
-                String doPliku="";
-                doPliku=+ table.getValueAt(wiersz, kolumna).toString()+";";
-
+        try {
+            FileWriter fileOut = new FileWriter("laptopy.txt");
+            fileOut.write("");
+            for (int row = 0; row < table.getRowCount(); row++) {
+                String wiersz = "";
+                for (int col = 0; col < table.getColumnCount(); col++) {
+                    wiersz += table.getValueAt(row, col) + ";";
+                }
+                fileOut.append(wiersz);
+                fileOut.append(System.getProperty( "line.separator" ));
             }
+            fileOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        plik.append();
-        plik.close();
 
     }
     private void zapiszXML() {
+       // JAXBContext jaxbContext = JAXBContext.newInstance(Employee.class);
 
     }
 
