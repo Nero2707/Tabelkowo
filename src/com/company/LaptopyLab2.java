@@ -148,24 +148,30 @@ public class LaptopyLab2 extends JPanel {
     }
     private void eksportujDoBazyDanych () {
         DBHelper dbHelper = new DBHelper();
+        dbHelper.createConnection();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         for (int row = 0; row < table.getRowCount(); row++) {
             String query = "insert into laptopy (manufacturer, screenSize, screenType, screenResolution, touchscreen, processor_name, physical_cores, clock_speed, ram, disk_storage, disk_type, graphic_card_name,graphic_card_memory, disc_reader, operating_system) values ( ";
             for (int col = 0; col < table.getColumnCount(); col++) {
-                if("".equals(table.getValueAt(row, col))){
-                    query += "null,";
-                }else{
-                    query += table.getValueAt(row, col) + ",";
+                if(col==table.getColumnCount()-1){
+                    if("".equals(table.getValueAt(row, col))){
+                        query += "null";
+                    }else{
+                        query += "\'"+ table.getValueAt(row, col) +"\'";
+                    }
+                }else {
+                    if ("".equals(table.getValueAt(row, col))) {
+                        query += "null,";
+                    } else {
+                        query +="\'"+ table.getValueAt(row, col) +"\'" + ",";
+                    }
                 }
+            }
+            query +=");";
+            dbHelper.insertRecord(query);
 
-            }
-            query +=")";
-            try {
-                dbHelper.insertRecord(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+        dbHelper.closeConnection();
 
 
     }
