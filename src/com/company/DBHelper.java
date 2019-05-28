@@ -24,28 +24,9 @@ public class DBHelper {
         ResultSet resultSet = query.executeQuery("select * from laptopy");
         return resultSet;
     }
-    public ResultSet insertRecord(List<String> query) throws SQLException {
-
-        String zapyt = " insert into laptopy (manufacturer, screenSize, screenType, screenResolution, touchscreen, processor_name, physical_cores, clock_speed, ram, disk_storage, disk_type, graphic_card_name,graphic_card_memory, disc_reader, operating_system)"
-                + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?)";
-
-        PreparedStatement preparedStmt = connection.prepareStatement(zapyt);
-        preparedStmt.setString (1, query.get(1));
-        preparedStmt.setString (2, "Rubble");
-        preparedStmt.setString (3, "Barney");
-        preparedStmt.setString (4, "Rubble");
-        preparedStmt.setString (5, "Barney");
-        preparedStmt.setString (6, "Rubble");
-        preparedStmt.setString (7, "Barney");
-        preparedStmt.setString (8, "Rubble");
-        preparedStmt.setString (9, "Barney");
-        preparedStmt.setString (10, "Rubble");
-        preparedStmt.setString (11, "Barney");
-        preparedStmt.setString (12, "Rubble");
-        preparedStmt.setString (13, "Barney");
-        preparedStmt.setString (14, "Rubble");
-        preparedStmt.setString (15, "Barney");
+    public void insertRecord(String query) throws SQLException {
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.execute();
-        conn.close();
+        connection.close();
     }
 }
