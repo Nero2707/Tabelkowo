@@ -94,9 +94,45 @@ public class LaptopyLab2 extends JPanel {
                 dbHelper.createConnection();
                 try {
                     ResultSet rs = dbHelper.getAllRecords();
+                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    model.setRowCount(0);
                     while (rs.next()){
                         String manufacturer = rs.getString("manufacturer");
+                        String screenSize = rs.getString("screenSize");
+                        String screenResolution = rs.getString("screenResolution");
+                        String screenType = rs.getString("screenType");
+                        String touchscreen = rs.getString("touchscreen");
+                        String processor_name = rs.getString("processor_name");
+                        String physical_cores = rs.getString("physical_cores");
+                        String clock_speed = rs.getString("clock_speed");
+                        String ram = rs.getString("ram");
+                        String disk_storage = rs.getString("disk_storage");
+                        String disk_type = rs.getString("disk_type");
+                        String graphic_card_name = rs.getString("graphic_card_name");
+                        String graphic_card_memory = rs.getString("graphic_card_memory");
+                        String operating_system = rs.getString("operating_system");
+                        String disc_reader = rs.getString("disc_reader");
                         System.out.println("test"+manufacturer);
+                        String a[]=new String[15];
+
+                        a[0]= manufacturer;
+
+                            a[1]= screenSize;
+                            a[2]=screenResolution;
+                            a[3]=screenType;
+                            a[4]=touchscreen;
+                            a[5]=processor_name;
+                            a[6] = physical_cores;
+                            a[7] = clock_speed;
+                            a[8]= ram;
+                            a[9]= disk_storage;
+                            a[10]= disk_type;
+                            a[11]= graphic_card_name;
+                            a[12]= graphic_card_memory;
+                        a[13]=operating_system;
+                        a[14]=disc_reader;
+                        model.addRow(a);
+
                     }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
@@ -104,7 +140,19 @@ public class LaptopyLab2 extends JPanel {
             }
         } );
     }
+    private void eksportujDoBazyDanych () {
+        DBHelper dbHelper = new DBHelper();
+        dbHelper.createConnection();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        for (int row = 0; row < table.getRowCount(); row++) {
+            String wiersz = "";
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                wiersz += table.getValueAt(row, col) + ";";
+            }
+        }
 
+
+    }
     private void wczytajTXT() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
