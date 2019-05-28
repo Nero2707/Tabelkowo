@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
-public class SimpleTableDemo extends JPanel {
+public class LaptopyLab2 extends JPanel {
     private boolean DEBUG = false;
     private JTable table;
-    public SimpleTableDemo() {
+    public LaptopyLab2() {
         super(new GridLayout(1,0));
 
         String[] columnNames = {"Producent",
@@ -111,77 +111,45 @@ public class SimpleTableDemo extends JPanel {
 //            //calling the unmarshall method
            Laptops laptopy = (Laptops) unmarshallerObj.unmarshal(file);
                 System.out.println("test");
+           DefaultTableModel model = (DefaultTableModel) table.getModel();
+           model.setRowCount(0);
             for (int row = 0; row < laptopy.getLaptops().size(); row++) {
                 Laptop laptop= laptopy.getLaptops().get(row);
-                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                model.setRowCount(0);
+
                 String a[]=new String[15];
+
                 a[0]=  laptop.getManufacturer();
-                a[1]= laptop.getScreen().getSize();
-                a[2]=
-                a[3]=
-                a[4]=
-                a[5]=
-                a[6]=
-                model.addRow();
-//                Screen screen = new Screen();
-//                Laptop laptop = new Laptop();
-//                Processor procesor = new Processor();
-//                Disc dysk = new Disc();
-//                GraphicCard grafika = new GraphicCard();
-//                for (int col = 0; col < laptopy.getLaptops().size(); col++) {
-//                    String nazwaKolumny = laptopy(col);
-//                    if ("producent".equalsIgnoreCase(nazwaKolumny)) {
-//                        laptop.getManufacturer((String) laptopy.getValueAt(row, col));
-//                    }
-//                    if ("rozdzielczość".equalsIgnoreCase(nazwaKolumny)) {
-//                        screen.getSize((String) table.getValueAt(row, col));
-//                    }
-//                    if ("powłoka matrycy".equalsIgnoreCase(nazwaKolumny)) {
-//                        screen.getType((String) table.getValueAt(row, col));
-//                    }
-//                    if ("ekran dotykowy".equalsIgnoreCase(nazwaKolumny)) {
-//                        screen.getTouchscreen((String) table.getValueAt(row, col));
-//                    }
-//                    if ("seria procesora".equalsIgnoreCase(nazwaKolumny)) {
-//                        procesor.getName((String) table.getValueAt(row, col));
-//                    }
-//                    if ("liczba rdzeni".equalsIgnoreCase(nazwaKolumny)) {
-//                        procesor.getPhysical_cores((String) table.getValueAt(row, col));
-//                    }
-//                    if ("Taktowanie bazowe".equalsIgnoreCase(nazwaKolumny)) {
-//                        procesor.getClock_speed((String) table.getValueAt(row, col));
-//                    }
-//                    if ("wielkość pamięci ram".equalsIgnoreCase(nazwaKolumny)) {
-//                        laptop.getRam((String) table.getValueAt(row, col));
-//                    }
-//                    if ("pojemność dysku".equalsIgnoreCase(nazwaKolumny)) {
-//                        dysk.getStorage((String) table.getValueAt(row, col));
-//                    }
-//                    if ("typ dysku".equalsIgnoreCase(nazwaKolumny)) {
-//                        dysk.getType((String) table.getValueAt(row, col));
-//                    }
-//                    if ("karta graficzna".equalsIgnoreCase(nazwaKolumny)) {
-//                        grafika.getName((String) table.getValueAt(row, col));
-//                    }
-//                    if ("pamięć karty graficznej".equalsIgnoreCase(nazwaKolumny)) {
-//                        grafika.getMemory((String) table.getValueAt(row, col));
-//                    }
-//                    if ("system operacyjny".equalsIgnoreCase(nazwaKolumny)) {
-//                        laptop.getOs((String) table.getValueAt(row, col));
-//                    }
-//                    if ("napęd optyczny".equalsIgnoreCase(nazwaKolumny)) {
-//                        laptop.getDisc_reader((String) table.getValueAt(row, col));
-//                    }
-//                    laptop.setScreen(screen);
-//                    laptop.setProcessor(procesor);
-//                    laptop.setDisc(dysk);
-//                    laptop.setGraphic_card(grafika);
-//
-//                }
-//                laptopList.add(laptop);
-//                for (int row = 0; row < laptopy.getLaptops().size(); row++) {
-//                    model.addRow();
+
+                if (laptop.getScreen()!=null) {
+                    a[1]= laptop.getScreen().getSize();
+                    a[2]=laptop.getScreen().getResolution();
+                    a[3]=laptop.getScreen().getType();
+                    a[4]=laptop.getScreen().getTouchscreen();
+                }
+                if (laptop.getScreen()!=null) {
+                    a[5]=laptop.getProcessor().getName();
+                    a[6] = laptop.getProcessor().getPhysical_cores();
+                    a[7] = laptop.getProcessor().getClock_speed();
+
+                }
+                a[8]= laptop.getRam();
+                if (laptop.getDisc()!=null) {
+                    a[9]= laptop.getDisc().getStorage();
+                    a[10]= laptop.getDisc().getType();
+
+                }
+                if (laptop.getDisc()!=null) {
+                    a[9]= laptop.getDisc().getStorage();
+                    a[10]= laptop.getDisc().getType();
+                }
+                if (laptop.getGraphic_card()!=null) {
+                    a[11]= laptop.getGraphic_card().getName();
+                    a[12]= laptop.getGraphic_card().getMemory();
+                }
+                a[13]=laptop.getOs();
+                a[14]=laptop.getDisc_reader();
+                model.addRow(a);
+
                }
             }catch(Exception e){
                 e.printStackTrace();
@@ -223,6 +191,9 @@ public class SimpleTableDemo extends JPanel {
                     laptop.setManufacturer((String)table.getValueAt(row, col));
                 }
                 if("rozdzielczość".equalsIgnoreCase(nazwaKolumny)){
+                    screen.setResolution((String)table.getValueAt(row, col));
+                }
+                if("wielkość matrycy".equalsIgnoreCase(nazwaKolumny)){
                     screen.setSize((String)table.getValueAt(row, col));
                 }
                 if("powłoka matrycy".equalsIgnoreCase(nazwaKolumny)){
@@ -290,7 +261,7 @@ public class SimpleTableDemo extends JPanel {
         JFrame frame = new JFrame("Tabelkowo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        SimpleTableDemo newContentPane = new SimpleTableDemo();
+        LaptopyLab2 newContentPane = new LaptopyLab2();
         newContentPane.setOpaque(true);
         frame.setContentPane(newContentPane);
 

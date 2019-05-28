@@ -19,6 +19,9 @@ public class Screen {
     @XmlElement(name = "touchscreen")
     public String touchscreen;
 
+    @XmlElement(name = "resolution")
+    public String resolution;
+
     public String getSize() {
         return size;
     }
@@ -41,5 +44,13 @@ public class Screen {
 
     public void setTouchscreen(String touchscreen) {
         this.touchscreen = touchscreen;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
     }
 }
