@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -53,11 +54,15 @@ public class SimpleTableDemo extends JPanel {
         JButton wczytajDaneXmlButton = new JButton("Wczytaj dane z XML");
         JButton zapiszDaneTxtButton = new JButton("Zapisz dane do TXT");
         JButton zapiszDaneXmlButton = new JButton("Zapisz dane do XML");
+        JButton importujZBazyDanych = new JButton("Importuj z bazy danych");
+        JButton eksportujDoBazyDanych = new JButton("Eksportuj do bazy danych");
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.add(wczytajDaneTxtButton);
         buttonsPanel.add(wczytajDaneXmlButton);
         buttonsPanel.add(zapiszDaneTxtButton);
         buttonsPanel.add(zapiszDaneXmlButton);
+        buttonsPanel.add(importujZBazyDanych);
+        buttonsPanel.add(eksportujDoBazyDanych);
         add(buttonsPanel);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane);
@@ -95,7 +100,81 @@ public class SimpleTableDemo extends JPanel {
     }
 
     private void wczytajXML() {
+        try{
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            //getting the xml file to read
+            File file = new File("laptopy.xml");
+            //creating the JAXB context
+            JAXBContext jContext = JAXBContext.newInstance(Laptops.class);
+            //creating the unmarshall object
+            Unmarshaller unmarshallerObj = jContext.createUnmarshaller();
+            //calling the unmarshall method
+            Laptops laptopy=(Laptops) unmarshallerObj.unmarshal(file);
 
+            List<Laptop> laptopList = new ArrayList<>();
+            for (int row = 0; row < laptopy.getLaptops().size(); row++) {
+                Screen screen = new Screen();
+                Laptop laptop = new Laptop();
+                Processor procesor = new Processor();
+                Disc dysk = new Disc();
+                GraphicCard grafika = new GraphicCard();
+                for (int col = 0; col < laptopy.getLaptops().size(); col++) {
+                    String nazwaKolumny = laptopy(col);
+                    if("producent".equalsIgnoreCase(nazwaKolumny)){
+                        laptop.getManufacturer((String)laptopy.getValueAt(row, col));
+                    }
+                    if("rozdzielczość".equalsIgnoreCase(nazwaKolumny)){
+                        screen.getSize((String)table.getValueAt(row, col));
+                    }
+                    if("powłoka matrycy".equalsIgnoreCase(nazwaKolumny)){
+                        screen.getType((String)table.getValueAt(row, col));
+                    }
+                    if("ekran dotykowy".equalsIgnoreCase(nazwaKolumny)){
+                        screen.getTouchscreen((String)table.getValueAt(row, col));
+                    }
+                    if("seria procesora".equalsIgnoreCase(nazwaKolumny)){
+                        procesor.getName((String)table.getValueAt(row, col));
+                    }
+                    if("liczba rdzeni".equalsIgnoreCase(nazwaKolumny)){
+                        procesor.getPhysical_cores((String)table.getValueAt(row, col));
+                    }
+                    if("Taktowanie bazowe".equalsIgnoreCase(nazwaKolumny)){
+                        procesor.getClock_speed((String)table.getValueAt(row, col));
+                    }
+                    if("wielkość pamięci ram".equalsIgnoreCase(nazwaKolumny)){
+                        laptop.getRam((String)table.getValueAt(row, col));
+                    }
+                    if("pojemność dysku".equalsIgnoreCase(nazwaKolumny)){
+                        dysk.getStorage((String)table.getValueAt(row, col));
+                    }
+                    if("typ dysku".equalsIgnoreCase(nazwaKolumny)){
+                        dysk.getType((String)table.getValueAt(row, col));
+                    }
+                    if("karta graficzna".equalsIgnoreCase(nazwaKolumny)){
+                        grafika.getName((String)table.getValueAt(row, col));
+                    }
+                    if("pamięć karty graficznej".equalsIgnoreCase(nazwaKolumny)){
+                        grafika.getMemory((String)table.getValueAt(row, col));
+                    }
+                    if("system operacyjny".equalsIgnoreCase(nazwaKolumny)){
+                        laptop.getOs((String)table.getValueAt(row, col));
+                    }
+                    if("napęd optyczny".equalsIgnoreCase(nazwaKolumny)){
+                        laptop.getDisc_reader((String)table.getValueAt(row, col));
+                    }
+                    laptop.setScreen(screen);
+                    laptop.setProcessor(procesor);
+                    laptop.setDisc(dysk);
+                    laptop.setGraphic_card(grafika);
+
+                }
+                laptopList.add(laptop);
+            for (int row = 0; row < laptopy.getLaptops().size(); row++) {
+                model.addRow();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
     private void zapiszTXT() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
