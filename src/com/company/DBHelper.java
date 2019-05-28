@@ -18,8 +18,8 @@ public class DBHelper {
         }
     }
 
-    public ResultSet getAllRecords() throws SQLException {
-        Statement query = connection.createStatement();
-        ResultSet resultSet = query.executeQuery("select * from notebooks");
-    }
+//    public ResultSet getAllRecords() throws SQLException {
+//        Statement query = connection.createStatement();
+//        ResultSet resultSet = query.executeQuery("select * from notebooks");
+//    }
 }
