@@ -10,7 +10,7 @@ public class DBHelper {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/systemintegrations", "root", "");
+                    "jdbc:mysql://localhost:3306/lab3", "root", "");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -18,8 +18,9 @@ public class DBHelper {
         }
     }
 
-//    public ResultSet getAllRecords() throws SQLException {
-//        Statement query = connection.createStatement();
-//        ResultSet resultSet = query.executeQuery("select * from notebooks");
-//    }
+    public ResultSet getAllRecords() throws SQLException {
+        Statement query = connection.createStatement();
+        ResultSet resultSet = query.executeQuery("select * from lab3");
+        return resultSet;
+    }
 }

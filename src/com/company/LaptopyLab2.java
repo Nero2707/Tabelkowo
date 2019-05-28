@@ -17,6 +17,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -86,7 +88,21 @@ public class LaptopyLab2 extends JPanel {
                 zapiszXML();
             }
         } );
-
+        importujZBazyDanych.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DBHelper dbHelper = new DBHelper();
+                dbHelper.createConnection();
+                try {
+                    ResultSet rs = dbHelper.getAllRecords();
+                    while (rs.next()){
+                        String manufacturer = rs.getString("manufacturer");
+                        System.out.println("test"+manufacturer);
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        } );
     }
 
     private void wczytajTXT() {
