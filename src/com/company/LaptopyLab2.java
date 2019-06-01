@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.ws.Endpoint;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -51,6 +53,7 @@ public class LaptopyLab2 extends JPanel {
         table = new JTable(new DefaultTableModel(columnNames,0));
         table.setPreferredScrollableViewportSize(new Dimension(800, 600));
         table.setFillsViewportHeight(true);
+        //static JTextField liczbaNowychRekordow;
 
         JButton wczytajDaneTxtButton = new JButton("Wczytaj dane z TXT");
         JButton wczytajDaneXmlButton = new JButton("Wczytaj dane z XML");
@@ -58,6 +61,7 @@ public class LaptopyLab2 extends JPanel {
         JButton zapiszDaneXmlButton = new JButton("Zapisz dane do XML");
         JButton importujZBazyDanych = new JButton("Importuj z bazy danych");
         JButton eksportujDoBazyDanych = new JButton("Eksportuj do bazy danych");
+        //JButton TEST = new JButton("TEST =");
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.add(wczytajDaneTxtButton);
         buttonsPanel.add(wczytajDaneXmlButton);
@@ -65,6 +69,7 @@ public class LaptopyLab2 extends JPanel {
         buttonsPanel.add(zapiszDaneXmlButton);
         buttonsPanel.add(importujZBazyDanych);
         buttonsPanel.add(eksportujDoBazyDanych);
+       // buttonsPanel.add(TEST);
         add(buttonsPanel);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane);
@@ -98,53 +103,79 @@ public class LaptopyLab2 extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 DBHelper dbHelper = new DBHelper();
                 dbHelper.createConnection();
-                try {
-                    ResultSet rs = dbHelper.getAllRecords();
-                    DefaultTableModel model = (DefaultTableModel) table.getModel();
-                    model.setRowCount(0);
-                    while (rs.next()){
-                        String manufacturer = rs.getString("manufacturer");
-                        String screenSize = rs.getString("screenSize");
-                        String screenResolution = rs.getString("screenResolution");
-                        String screenType = rs.getString("screenType");
-                        String touchscreen = rs.getString("touchscreen");
-                        String processor_name = rs.getString("processor_name");
-                        String physical_cores = rs.getString("physical_cores");
-                        String clock_speed = rs.getString("clock_speed");
-                        String ram = rs.getString("ram");
-                        String disk_storage = rs.getString("disk_storage");
-                        String disk_type = rs.getString("disk_type");
-                        String graphic_card_name = rs.getString("graphic_card_name");
-                        String graphic_card_memory = rs.getString("graphic_card_memory");
-                        String operating_system = rs.getString("operating_system");
-                        String disc_reader = rs.getString("disc_reader");
-                        System.out.println("test"+manufacturer);
-                        String a[]=new String[15];
-
-                        a[0]= manufacturer;
-
-                            a[1]= screenSize;
-                            a[2]=screenResolution;
-                            a[3]=screenType;
-                            a[4]=touchscreen;
-                            a[5]=processor_name;
-                            a[6] = physical_cores;
-                            a[7] = clock_speed;
-                            a[8]= ram;
-                            a[9]= disk_storage;
-                            a[10]= disk_type;
-                            a[11]= graphic_card_name;
-                            a[12]= graphic_card_memory;
-                        a[13]=operating_system;
-                        a[14]=disc_reader;
-                        model.addRow(a);
-
-                    }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                ResultSet rs = dbHelper.getAllRecords();
+                imprZBD(rs);
             }
         } );
+//        TEST.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                DBHelper dbHelper = new DBHelper();
+//                dbHelper.createConnection();
+//                List<String> cechy = Arrays.asList("manufacturer",
+//                        "screenSize",
+//                        "screenType",
+//                        "screenResolution");
+//                ResultSet rs = dbHelper.laptopyWgCech(cechy);
+//                imprZBD(rs);
+//            }
+//        } );
+    }
+    private void imprZBD(ResultSet rs){
+        try {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            while (rs.next()){
+                String manufacturer = rs.getString("manufacturer");
+                String screenSize = rs.getString("screenSize");
+                String screenResolution = rs.getString("screenResolution");
+                String screenType = rs.getString("screenType");
+                String touchscreen = rs.getString("touchscreen");
+                String processor_name = rs.getString("processor_name");
+                String physical_cores = rs.getString("physical_cores");
+                String clock_speed = rs.getString("clock_speed");
+                String ram = rs.getString("ram");
+                String disk_storage = rs.getString("disk_storage");
+                String disk_type = rs.getString("disk_type");
+                String graphic_card_name = rs.getString("graphic_card_name");
+                String graphic_card_memory = rs.getString("graphic_card_memory");
+                String operating_system = rs.getString("operating_system");
+                String disc_reader = rs.getString("disc_reader");
+ //               System.out.println("test"+manufacturer);
+                String a[]=new String[15];
+
+                a[0]= manufacturer;
+
+                a[1]= screenSize;
+                a[2]=screenResolution;
+                a[3]=screenType;
+                a[4]=touchscreen;
+                a[5]=processor_name;
+                a[6] = physical_cores;
+                a[7] = clock_speed;
+                a[8]= ram;
+                a[9]= disk_storage;
+                a[10]= disk_type;
+                a[11]= graphic_card_name;
+                a[12]= graphic_card_memory;
+                a[13]=operating_system;
+                a[14]=disc_reader;
+                model.addRow(a);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    //przycisk do eksportu danych z bazy do pliku XML, zawierającego tylko 5 wybranych przez użytkownika cech laptopów.
+    private void TEST(){
+        ServerClass server = new ServerClass();
+        try {
+
+            server.eksportujDoXML();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     private void eksportujDoBazyDanych () {
         DBHelper dbHelper = new DBHelper();
@@ -183,6 +214,7 @@ public class LaptopyLab2 extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void wczytajXML() {
@@ -339,9 +371,6 @@ public class LaptopyLab2 extends JPanel {
 
     }
 
-
-
-
         private static void createAndShowGUI() {
 
         JFrame frame = new JFrame("Tabelkowo");
@@ -362,5 +391,8 @@ public class LaptopyLab2 extends JPanel {
                 createAndShowGUI();
             }
         });
+        String url = "http://localhost:1212/ServerClass";
+        Endpoint.publish(url, new ServerClass());
+        System.out.println("Service started @ " + url);
     }
 }

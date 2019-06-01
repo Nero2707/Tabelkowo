@@ -49,4 +49,49 @@ public class DBHelper {
         }
 
     }
+    public int countRecords(String nazwaProducenta) throws SQLException {
+        ResultSet resultSet = null;
+        try {
+            Statement query = null;
+            query = connection.createStatement();
+            resultSet = query.executeQuery("select COUNT(*) from laptopy where manufacturer ='"+nazwaProducenta+"'");
+            if(resultSet.next()){
+                int liczba = resultSet.getInt(1);
+                return liczba;
+            }else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public int countRecordsRozdzielczosc(String rozdzcEkranuBox) throws SQLException {
+        ResultSet resultSet = null;
+        try {
+            Statement query = null;
+            query = connection.createStatement();
+            resultSet = query.executeQuery("select COUNT(*) from laptopy where screenType ='"+rozdzcEkranuBox+"'");
+            if(resultSet.next()){
+                int liczba = resultSet.getInt(1);
+                return liczba;
+            }else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public ResultSet laptopyWgCech( List<String> cechy)  {
+        Statement query = null;
+        ResultSet resultSet = null;
+        try {
+            query = connection.createStatement();
+            resultSet = query.executeQuery("select "+String.join(",", cechy)+" from laptopy");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
 }
