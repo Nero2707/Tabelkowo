@@ -209,7 +209,7 @@ public class LaptopyLab2 extends JPanel {
     private void wczytajTXT() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
-        try (Stream<String> wiersze = Files.lines(Paths.get("laptopy.txt"))) {
+        try (Stream<String> wiersze = Files.lines(Paths.get("C:\\plik-laptopy\\laptopy.txt"))) {
             wiersze.forEach(wiersz->model.addRow(wiersz.split(";",-1)));
         } catch (IOException e) {
             e.printStackTrace();
